@@ -11,10 +11,17 @@ def get_data(cep):
 
 users_path = "01-bronze-raw/users.csv"
 users_df = pd.read_csv(users_path)
-print(users_df.head())
 
 cep_lists = users_df['cep'].tolist()
 
+cep_info_list = []
+
 for cep in cep_lists:
-    data = get_data(cep)
-    print(data)
+    cep_clean = cep.replace("-", "")
+    cep_info = get_data(cep_clean)
+    cep_info_list.append(cep_info)
+    print(cep_info)
+    cep_info_list.append(cep_info)
+
+cep_info_df = pd.DataFrame(cep_info_list)
+cep_info_df.to_csv("01-bronze-raw/cep_info.csv", index=False)
