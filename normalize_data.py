@@ -15,6 +15,8 @@ class DataNormalizer:
     
     def load_df_from_file(self, file, ext):
         input_path = os.path.join(self.input_dir, file)
+        
+        ext = os.path.splitext(file)
 
         if ext.lower() == ".csv":
             df = pd.read_csv(input_path)
@@ -36,9 +38,6 @@ class DataNormalizer:
 
             df = self.convert_columns_to_strings(df)
             df = df.drop_duplicates().reset_index(drop=True)
-            
-            df.to_parquet(output_path, index=False)
-            print(f"Arquivo {file} normalizado e salvo em {output_path}")
 
 if __name__ == "__main__":
     input_directory = "01-bronze-raw"
