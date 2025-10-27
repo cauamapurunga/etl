@@ -19,12 +19,12 @@ def run_script(script_name, description):
     print(f"\n✓ {description} concluído")
 
 if __name__ == "__main__":
-    print("\n🚀 Iniciando pipeline ETL - Modelo Medalhão\n")
+    print("\nIniciando pipeline ETL - Modelo Medalhão\n")
     
-    run_script("scripts/extract/get_data.py", "BRONZE - Extraindo dados da API ViaCEP")
-    run_script("scripts/transform/normalize_data.py", "SILVER - Normalizando e convertendo para Parquet")
-    run_script("scripts/load/populate_db.py", "LOAD - Carregando dados no PostgreSQL")
-    run_script("scripts/enrich/enrich_data.py", "GOLD - Enriquecendo dados finais")
+    run_script("scripts/extract/get_data.py", "EXTRACT → Bronze (dados brutos)")
+    run_script("scripts/transform/normalize_data.py", "TRANSFORM → Silver (dados validados)")
+    run_script("scripts/load/populate_db.py", "LOAD → Gold (Parte 1: Carrega no PostgreSQL)")
+    run_script("scripts/load/enrich_data.py", "LOAD → Gold (Parte 2: Enriquece e exporta)")
     
     print(f"\n{'='*50}")
     print("✓ Pipeline ETL concluído com sucesso!")

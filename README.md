@@ -13,27 +13,31 @@
 
 ## Sobre o Projeto
 
-O **ETL Medalhão** é uma solução completa de extração, transformação e carga de dados desenvolvida em Python. O sistema implementa a arquitetura Medallion (Bronze/Silver/Gold) para processar dados de usuários brasileiros, enriquecendo-os com informações de endereço completas via API ViaCEP. O pipeline garante qualidade de dados através de validações em múltiplas camadas, desde a ingestão bruta até a geração de datasets prontos para análise.
+O **ETL Medalhão** é uma solução completa de extração, transformação e carga de dados desenvolvida em Python. O sistema implementa a arquitetura Medallion (Bronze/Silver/Gold) integrada ao padrão ETL clássico para processar dados de usuários brasileiros, enriquecendo-os com informações de endereço completas via API ViaCEP. O pipeline garante qualidade de dados através de validações em múltiplas camadas, desde a ingestão bruta até a geração de datasets prontos para análise.
 
-**Fluxo de Dados:**
+**Fluxo ETL:**
 ```
-80 usuários + 80 CEPs (Bronze - dados brutos)
-         ↓
-80 usuários + 58 CEPs válidos (Silver - dados limpos)
-         ↓
-62 usuários enriquecidos (Gold - dados para análise)
+EXTRACT → Bronze: 80 usuários + 80 CEPs (dados brutos da API)
+                         ↓
+TRANSFORM → Silver: 80 usuários + 58 CEPs (validados e otimizados)
+                         ↓
+LOAD → Gold: 62 usuários enriquecidos (PostgreSQL + arquivos finais)
 ```
+
+**Mapeamento ETL ↔ Medalhão:**
+- **Extract** = Camada Bronze (dados brutos)
+- **Transform** = Camada Silver (dados validados)
+- **Load** = Camada Gold (dados enriquecidos no destino final)
 
 ---
 
 ## Funcionalidades Principais
 
-- **Extração de Dados (Bronze)**: Coleta dados brutos de arquivos CSV/JSON e API ViaCEP.
-- **Transformação de Dados (Silver)**: Limpeza, validação e conversão para formato Parquet otimizado.
-- **Carga de Dados (Load)**: Persistência dos dados no PostgreSQL com tipagem adequada.
-- **Enriquecimento de Dados (Gold)**: Joins e agregações para gerar datasets prontos para análise/BI.
-- **Arquitetura Modular**: Código organizado em camadas (`extract`, `transform`, `load`) para promover a separação de responsabilidades e fácil manutenção.
-- **Ambiente Containerizado**: PostgreSQL totalmente gerenciado pelo Docker Compose, simplificando a configuração.
+- **Extract (Bronze)**: Coleta dados brutos de arquivos CSV e API ViaCEP.
+- **Transform (Silver)**: Limpeza, validação e conversão para formato Parquet otimizado.
+- **Load (Gold)**: Carga no PostgreSQL, enriquecimento via JOIN e exportação de datasets finais.
+- **Arquitetura Modular**: Código organizado seguindo o padrão ETL (`extract`, `transform`, `load`).
+- **Ambiente Containerizado**: PostgreSQL totalmente gerenciado pelo Docker Compose.
 
 ---
 
@@ -88,9 +92,9 @@ docker-compose down
 
 ## Documentação do Pipeline
 
-### **Camada Bronze (Raw Data)**
+### **EXTRACT → Camada Bronze (Raw Data)**
 
-Dados brutos extraídos sem nenhum tratamento, preservando a integralidade original para auditoria.
+Extração de dados brutos sem nenhum tratamento, preservando a integralidade original para auditoria.
 
 | Script | Descrição |
 | :----- | :-------- |
@@ -113,9 +117,9 @@ Dados brutos extraídos sem nenhum tratamento, preservando a integralidade origi
 
 ---
 
-### **Camada Silver (Validated Data)**
+### **TRANSFORM → Camada Silver (Validated Data)**
 
-Dados limpos, validados e convertidos para formato otimizado.
+Transformação e limpeza dos dados brutos, validação e otimização de formato.
 
 | Script | Descrição |
 | :----- | :-------- |
@@ -142,40 +146,23 @@ Dados limpos, validados e convertidos para formato otimizado.
 
 ---
 
-### **Camada Load (Database)**
+### **LOAD → Camada Gold (Enriched Data)**
 
-Carga dos dados validados no PostgreSQL para consultas relacionais.
+Carga dos dados validados no destino final (PostgreSQL), enriquecimento e exportação.
 
 | Script | Descrição |
 | :----- | :-------- |
 | `scripts/load/populate_db.py` | Cria tabelas e insere dados do Silver no PostgreSQL |
+| `scripts/load/enrich_data.py` | Executa query SQL para juntar users + CEP e gera datasets finais |
 
 **O que faz:**
+
+**Parte 1 - populate_db.py:**
 - Lê arquivos Parquet do Silver
 - Cria tabelas automaticamente no PostgreSQL
-- Insere dados com tipagem TEXT (flexível)
-- Permite consultas SQL sobre os dados
+- Insere dados validados (80 users + 58 CEPs)
 
-**Tabelas criadas:**
-- `users`: 80 usuários completos
-- `cep_info`: 58 endereços válidos
-
-**Por que carregar no banco?**
-- Consultas SQL complexas (joins, agregações)
-- Múltiplos usuários podem acessar
-- Integração com ferramentas de BI
-
----
-
-### **Camada Gold (Enriched Data)**
-
-Dados enriquecidos prontos para análise e Business Intelligence.
-
-| Script | Descrição |
-| :----- | :-------- |
-| `scripts/enrich/enrich_data.py` | Executa query SQL para juntar users + CEP e gera datasets finais |
-
-**O que faz:**
+**Parte 2 - enrich_data.py:**
 - Executa INNER JOIN entre `users` e `cep_info` pelo campo CEP
 - Combina dados pessoais com endereço completo
 - Gera estatísticas descritivas (estados, gênero)
@@ -203,11 +190,18 @@ ORDER BY id;
 - `users_enriched.parquet`: 62 registros otimizados
 - `users_enriched.csv`: 62 registros para análise
 
-**Por que 62 registros?**
-- 80 usuários iniciais
+**Por que 62 registros no Gold?**
+- 80 usuários iniciais no Bronze
 - 18 usuários têm CEPs com erro (removidos no Silver)
 - Alguns CEPs aparecem em múltiplos usuários (ex: 2 pessoas na mesma rua)
-- INNER JOIN garante apenas correspondências válidas
+- INNER JOIN garante apenas correspondências válidas entre users e CEPs
+- Resultado: 62 usuários com endereço completo
+
+**Por que carregar no PostgreSQL?**
+- Permite consultas SQL complexas (JOINs, agregações)
+- Múltiplos usuários/sistemas podem acessar os dados
+- Integração com ferramentas de BI (Power BI, Tableau, Metabase)
+- Destino final do pipeline ETL
 
 **Estatísticas:**
 - 16 estados diferentes representados
@@ -223,18 +217,17 @@ O projeto segue uma arquitetura em camadas para promover a organização e o des
 ```
 etl/
 ├── data/
-│   ├── 01-bronze-raw/          # Dados brutos (CSV, JSON)
-│   ├── 02-silver-validated/    # Dados limpos (Parquet)
-│   └── 03-gold-enriched/       # Dados enriquecidos (análise)
+│   ├── 01-bronze-raw/          # EXTRACT: Dados brutos (CSV)
+│   ├── 02-silver-validated/    # TRANSFORM: Dados limpos (Parquet)
+│   └── 03-gold-enriched/       # LOAD: Dados enriquecidos (análise)
 ├── scripts/
 │   ├── extract/
-│   │   └── get_data.py         # Extração de dados da API
+│   │   └── get_data.py         # Bronze: Extração da API
 │   ├── transform/
-│   │   └── normalize_data.py   # Normalização e limpeza
-│   ├── load/
-│   │   └── populate_db.py      # Carga no PostgreSQL
-│   └── enrich/
-│       └── enrich_data.py      # Enriquecimento final (Gold)
+│   │   └── normalize_data.py   # Silver: Normalização e limpeza
+│   └── load/
+│       ├── populate_db.py      # Gold: Carga no PostgreSQL
+│       └── enrich_data.py      # Gold: Enriquecimento e exportação
 ├── config/
 │   └── db.py                   # Conector do banco de dados
 ├── .gitignore
@@ -284,26 +277,25 @@ etl/
 ## Fluxo ETL
 
 1. **Extract (Bronze)**: Busca CEPs dos usuários na API ViaCEP e salva dados brutos
-2. **Transform (Silver)**: Limpa e converte dados para formato Parquet
-3. **Load**: Insere dados validados no PostgreSQL
-4. **Enrich (Gold)**: Gera datasets enriquecidos com joins e agregações
+2. **Transform (Silver)**: Limpa, valida e converte dados para formato Parquet otimizado
+3. **Load (Gold)**: Carrega no PostgreSQL, executa JOIN e gera datasets enriquecidos
 
 ---
 
 ## Execução Individual das Etapas
 
-Se preferir executar as etapas separadamente:
+Se preferir executar as etapas do ETL separadamente:
 
 ```bash
-# Bronze: Extração
+# Extract → Bronze
 python scripts/extract/get_data.py
 
-# Silver: Transformação
+# Transform → Silver
 python scripts/transform/normalize_data.py
 
-# Load: Carga no banco
+# Load → Gold (Parte 1: Carrega no PostgreSQL)
 python scripts/load/populate_db.py
 
-# Gold: Enriquecimento
-python scripts/enrich/enrich_data.py
+# Load → Gold (Parte 2: Enriquece e exporta)
+python scripts/load/enrich_data.py
 ```
