@@ -129,7 +129,7 @@ Dados enriquecidos prontos para análise e BI.
 
 | Script | Descrição |
 | :----- | :-------- |
-| `scripts/load/enrich_gold.py` | Executa query SQL para juntar users + CEP e gera datasets finais |
+| `scripts/enrich/enrich_data.py` | Executa query SQL para juntar users + CEP e gera datasets finais |
 
 **Query executada:**
 ```sql
@@ -170,9 +170,10 @@ etl/
 │   │   └── get_data.py         # Extração de dados da API
 │   ├── transform/
 │   │   └── normalize_data.py   # Normalização e limpeza
-│   └── load/
-│       ├── populate_db.py      # Carga no PostgreSQL
-│       └── enrich_gold.py      # Enriquecimento final
+│   ├── load/
+│   │   └── populate_db.py      # Carga no PostgreSQL
+│   └── enrich/
+│       └── enrich_data.py      # Enriquecimento final (Gold)
 ├── config/
 │   └── db.py                   # Conector do banco de dados
 ├── .gitignore
@@ -243,5 +244,5 @@ python scripts/transform/normalize_data.py
 python scripts/load/populate_db.py
 
 # Gold: Enriquecimento
-python scripts/load/enrich_gold.py
+python scripts/enrich/enrich_data.py
 ```

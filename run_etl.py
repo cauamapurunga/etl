@@ -24,7 +24,7 @@ if __name__ == "__main__":
     run_script("scripts/extract/get_data.py", "BRONZE - Extraindo dados da API ViaCEP")
     run_script("scripts/transform/normalize_data.py", "SILVER - Normalizando e convertendo para Parquet")
     run_script("scripts/load/populate_db.py", "LOAD - Carregando dados no PostgreSQL")
-    run_script("scripts/load/enrich_gold.py", "GOLD - Enriquecendo dados finais")
+    run_script("scripts/enrich/enrich_data.py", "GOLD - Enriquecendo dados finais")
     
     print(f"\n{'='*50}")
     print("✓ Pipeline ETL concluído com sucesso!")
