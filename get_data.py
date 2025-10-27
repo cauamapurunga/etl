@@ -19,7 +19,6 @@ cep_info_list = []
 for cep in cep_lists:
     cep_clean = cep.replace("-", "")
     cep_info = get_data(cep_clean)
-    cep_info_list.append(cep_info)
     print(cep_info)
     cep_info_list.append(cep_info)
 
