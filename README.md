@@ -13,7 +13,16 @@
 
 ## Sobre o Projeto
 
-O **ETL Medalhão** é uma solução completa de extração, transformação e carga de dados desenvolvida em Python. O sistema implementa a arquitetura Medallion (Bronze/Silver/Gold) para processar dados de usuários e produtos brasileiros, enriquecendo-os com informações de endereço via API ViaCEP. O pipeline é totalmente automatizado e containerizado com Docker para garantir portabilidade e reprodutibilidade.
+O **ETL Medalhão** é uma solução completa de extração, transformação e carga de dados desenvolvida em Python. O sistema implementa a arquitetura Medallion (Bronze/Silver/Gold) para processar dados de usuários brasileiros, enriquecendo-os com informações de endereço completas via API ViaCEP. O pipeline garante qualidade de dados através de validações em múltiplas camadas, desde a ingestão bruta até a geração de datasets prontos para análise.
+
+**Fluxo de Dados:**
+```
+80 usuários + 80 CEPs (Bronze - dados brutos)
+         ↓
+80 usuários + 58 CEPs válidos (Silver - dados limpos)
+         ↓
+62 usuários enriquecidos (Gold - dados para análise)
+```
 
 ---
 
@@ -81,15 +90,26 @@ docker-compose down
 
 ### **Camada Bronze (Raw Data)**
 
-Dados brutos extraídos sem nenhum tratamento.
+Dados brutos extraídos sem nenhum tratamento, preservando a integralidade original para auditoria.
 
 | Script | Descrição |
 | :----- | :-------- |
 | `scripts/extract/get_data.py` | Extrai CEPs de usuários e busca dados de endereço na API ViaCEP |
 
+**O que faz:**
+- Lê o arquivo `users.csv` com 80 usuários
+- Para cada CEP, faz requisição à API ViaCEP
+- A API retorna dados de endereço OU `{"erro": "true"}` quando o CEP é inválido/não encontrado
+- Salva **todos** os resultados no CSV, preservando tanto sucessos quanto erros
+
 **Dados gerados:**
-- `users.csv`: 80 usuários com dados brasileiros
-- `cep_info.csv`: Informações de endereço completas
+- `users.csv`: 80 usuários com dados brasileiros (nome, email, telefone, CEP, nascimento, gênero)
+- `cep_info.csv`: 80 registros totais (62 CEPs válidos + 18 com `erro: true`)
+
+**Por que preservar erros?**
+- Rastreabilidade: saber quais CEPs falharam
+- Auditoria: histórico completo de todas as tentativas
+- Debug: identificar padrões de falha na API
 
 ---
 
@@ -99,37 +119,67 @@ Dados limpos, validados e convertidos para formato otimizado.
 
 | Script | Descrição |
 | :----- | :-------- |
-| `scripts/transform/normalize_data.py` | Remove duplicatas, trata valores nulos e converte para Parquet |
+| `scripts/transform/normalize_data.py` | Remove duplicatas, valida dados e converte para Parquet |
+
+**O que faz:**
+- Lê os 80 registros do Bronze (`cep_info.csv`)
+- **Filtra e remove** linhas onde `erro == "true"` (CEPs que a API não encontrou)
+- Remove a coluna `erro` (não é mais necessária após filtrar)
+- Converte colunas com listas para strings
+- Remove duplicatas completas
+- Converte para formato Parquet (compressão e performance)
 
 **Transformações aplicadas:**
-- Remoção de duplicatas
-- Conversão de colunas com listas para strings
-- Formato Parquet para melhor performance
-- Reset de índices
+- **Validação**: 80 → 58 registros CEP (removidos 18 com `erro: true` + 4 duplicatas)
+- **Limpeza**: Remove coluna `erro` após filtrar
+- **Otimização**: CSV → Parquet (~70% menor, 10x mais rápido)
+- **Qualidade**: Apenas CEPs válidos e únicos
+
+**Por que Parquet?**
+- Compressão eficiente (economiza espaço)
+- Leitura colunar rápida (perfeito para análises)
+- Compatível com ferramentas Big Data (Spark, Athena, BigQuery)
 
 ---
 
 ### **Camada Load (Database)**
 
-Carga dos dados validados no PostgreSQL.
+Carga dos dados validados no PostgreSQL para consultas relacionais.
 
 | Script | Descrição |
 | :----- | :-------- |
 | `scripts/load/populate_db.py` | Cria tabelas e insere dados do Silver no PostgreSQL |
 
+**O que faz:**
+- Lê arquivos Parquet do Silver
+- Cria tabelas automaticamente no PostgreSQL
+- Insere dados com tipagem TEXT (flexível)
+- Permite consultas SQL sobre os dados
+
 **Tabelas criadas:**
-- `users`: Informações dos usuários
-- `cep_info`: Dados de endereços
+- `users`: 80 usuários completos
+- `cep_info`: 58 endereços válidos
+
+**Por que carregar no banco?**
+- Consultas SQL complexas (joins, agregações)
+- Múltiplos usuários podem acessar
+- Integração com ferramentas de BI
 
 ---
 
 ### **Camada Gold (Enriched Data)**
 
-Dados enriquecidos prontos para análise e BI.
+Dados enriquecidos prontos para análise e Business Intelligence.
 
 | Script | Descrição |
 | :----- | :-------- |
 | `scripts/enrich/enrich_data.py` | Executa query SQL para juntar users + CEP e gera datasets finais |
+
+**O que faz:**
+- Executa INNER JOIN entre `users` e `cep_info` pelo campo CEP
+- Combina dados pessoais com endereço completo
+- Gera estatísticas descritivas (estados, gênero)
+- Exporta em dois formatos: Parquet (análise) e CSV (visualização)
 
 **Query executada:**
 ```sql
@@ -150,8 +200,19 @@ ORDER BY id;
 ```
 
 **Dados gerados:**
-- `users_enriched.parquet`: Formato otimizado
-- `users_enriched.csv`: Fácil visualização
+- `users_enriched.parquet`: 62 registros otimizados
+- `users_enriched.csv`: 62 registros para análise
+
+**Por que 62 registros?**
+- 80 usuários iniciais
+- 18 usuários têm CEPs com erro (removidos no Silver)
+- Alguns CEPs aparecem em múltiplos usuários (ex: 2 pessoas na mesma rua)
+- INNER JOIN garante apenas correspondências válidas
+
+**Estatísticas:**
+- 16 estados diferentes representados
+- Distribuição equilibrada: 50% masculino, 50% feminino
+- Cobertura nacional (Norte, Sul, Sudeste, Nordeste, Centro-Oeste)
 
 ---
 
