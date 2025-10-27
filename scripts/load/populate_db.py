@@ -1,6 +1,9 @@
-from db import DatabaseConnector
-import pandas as pd
+import sys
 import os
+sys.path.append(os.path.join(os.path.dirname(__file__), '..', '..'))
+
+from config.db import DatabaseConnector
+import pandas as pd
 
 db = DatabaseConnector(
         host="localhost",
@@ -10,9 +13,9 @@ db = DatabaseConnector(
         password="postgres"
     )
 
-for file in os.listdir("02-silver-validated"):
+for file in os.listdir("data/02-silver-validated"):
     if file.endswith(".parquet"):
-        df = pd.read_parquet(f"02-silver-validated/{file}")
+        df = pd.read_parquet(f"data/02-silver-validated/{file}")
 
         db.create_table(
             file.replace(".parquet", ""),

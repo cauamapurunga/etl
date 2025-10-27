@@ -15,17 +15,13 @@ class DataNormalizer:
     
     def load_df_from_file(self, file, ext):
         input_path = os.path.join(self.input_dir, file)
-        
-        ext = os.path.splitext(file)
 
         if ext.lower() == ".csv":
             df = pd.read_csv(input_path)
         elif ext.lower() == ".json":
-            # Tenta ler como JSON
             try:
                 df = pd.read_json(input_path)
             except ValueError:
-                # Se falhar, tenta ler como linhas separadas
                 df = pd.read_json(input_path, lines=True)
         return df
 
@@ -38,10 +34,11 @@ class DataNormalizer:
 
             df = self.convert_columns_to_strings(df)
             df = df.drop_duplicates().reset_index(drop=True)
+            df.to_parquet(output_path, index=False)
 
 if __name__ == "__main__":
-    input_directory = "01-bronze-raw"
-    output_directory = "02-silver-validated"
+    input_directory = "data/01-bronze-raw"
+    output_directory = "data/02-silver-validated"
 
     normalizer = DataNormalizer(input_directory, output_directory)
     normalizer.normalize_data()

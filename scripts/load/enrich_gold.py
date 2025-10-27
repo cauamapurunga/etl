@@ -1,5 +1,9 @@
+import sys
+import os
+sys.path.append(os.path.join(os.path.dirname(__file__), '..', '..'))
+
 import pandas as pd
-from db import DatabaseConnector
+from config.db import DatabaseConnector
 
 db = DatabaseConnector(
     host="localhost",
@@ -9,7 +13,7 @@ db = DatabaseConnector(
     password="postgres"
 )
 
-with open("03-gold-enriched/query.sql", "r", encoding="utf-8") as f:
+with open("data/03-gold-enriched/query.sql", "r", encoding="utf-8") as f:
     query = f.read()
 
 cursor = db.conn.cursor()
@@ -20,8 +24,8 @@ cursor.close()
 
 df_enriched = pd.DataFrame(results, columns=columns)
 
-df_enriched.to_parquet("03-gold-enriched/users_enriched.parquet", index=False)
-df_enriched.to_csv("03-gold-enriched/users_enriched.csv", index=False, encoding="utf-8")
+df_enriched.to_parquet("data/03-gold-enriched/users_enriched.parquet", index=False)
+df_enriched.to_csv("data/03-gold-enriched/users_enriched.csv", index=False, encoding="utf-8")
 
 print(f"Registros processados: {len(df_enriched)}")
 print(f"\nEstados: {df_enriched['uf'].nunique()}")
