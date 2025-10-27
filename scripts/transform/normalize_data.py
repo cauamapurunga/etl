@@ -33,6 +33,12 @@ class DataNormalizer:
             df = self.load_df_from_file(file, ext)
 
             df = self.convert_columns_to_strings(df)
+            
+            # Remove registros com erro da API (específico para cep_info)
+            if 'erro' in df.columns:
+                df = df[df['erro'] != 'true']
+                df = df.drop('erro', axis=1)
+            
             df = df.drop_duplicates().reset_index(drop=True)
             df.to_parquet(output_path, index=False)
 
