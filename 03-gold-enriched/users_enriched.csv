@@ -1,0 +1,63 @@
+id,nome,email,data_nascimento,genero,logradouro,complemento,unidade,localidade,uf,estado,regiao,ibge,gia,ddd,siafi
+1,João Silva,joao.silva@email.com,1985-03-15,M,Avenida Paulista,de 612 a 1510 - lado par,,São Paulo,SP,São Paulo,Sudeste,3550308.0,1004.0,11.0,7107.0
+11,Rafael Barbosa,rafael.barbosa@email.com,1986-05-10,M,Avenida Princesa Isabel,até 320 - lado par,,Vitória,ES,Espírito Santo,Sudeste,3205309.0,NaN,27.0,5705.0
+14,Amanda Rodrigues,amanda.rodrigues@email.com,1990-12-07,F,Rua Plácido de Castro,,,Rio Branco,AC,Acre,Norte,1200401.0,NaN,68.0,139.0
+16,Beatriz Costa,beatriz.costa@email.com,1992-08-14,F,Vila Ernestina,,,Fortaleza,CE,Ceará,Nordeste,2304400.0,NaN,85.0,1389.0
+17,Gustavo Silva,gustavo.silva@email.com,1986-04-09,M,Rua Felipe Schmidt,até 348/349,,Florianópolis,SC,Santa Catarina,Sul,4205407.0,NaN,48.0,8105.0
+18,Isabela Santos,isabela.santos@email.com,1991-10-25,F,Praça Rodrigo Octávio,,,Campinas,SP,São Paulo,Sudeste,3509502.0,2446.0,19.0,6291.0
+19,Marcelo Oliveira,marcelo.oliveira@email.com,1985-06-12,M,Avenida Paulista,de 1512 a 2132 - lado par,,São Paulo,SP,São Paulo,Sudeste,3550308.0,1004.0,11.0,7107.0
+2,Maria Santos,maria.santos@email.com,1990-07-22,F,Avenida Rio Branco,de 163 a 185 - lado ímpar,,Rio de Janeiro,RJ,Rio de Janeiro,Sudeste,3304557.0,NaN,21.0,6001.0
+21,Bruno Almeida,bruno.almeida@email.com,1989-03-17,M,Praça Sete de Setembro,,,Belo Horizonte,MG,Minas Gerais,Sudeste,3106200.0,NaN,31.0,4123.0
+22,Gabriela Rocha,gabriela.rocha@email.com,1994-11-22,F,Rua Emiliano Perneta,até 370/371,,Curitiba,PR,Paraná,Sul,4106902.0,NaN,41.0,7535.0
+23,Thiago Lima,thiago.lima@email.com,1987-05-08,M,Praça Conde de Porto Alegre,,,Porto Alegre,RS,Rio Grande do Sul,Sul,4314902.0,NaN,51.0,8801.0
+26,Letícia Barbosa,leticia.barbosa@email.com,1995-02-19,F,Rua Gonçalves Dias,,,Rio de Janeiro,RJ,Rio de Janeiro,Sudeste,3304557.0,NaN,21.0,6001.0
+27,Victor Nascimento,victor.nascimento@email.com,1990-08-27,M,Vila Martins,(Da Av Dq de Caxias),,Belém,PA,Pará,Norte,1501402.0,NaN,91.0,427.0
+29,Lucas Costa,lucas.costa@email.com,1989-12-30,M,Rua Dionísio Rosendo 1,,,Vitória,ES,Espírito Santo,Sudeste,3205309.0,NaN,27.0,5705.0
+32,Mariana Santos,mariana.santos@email.com,1991-09-14,F,Rua Minas Gerais,de 1009 ao fim - lado ímpar,,Rio Branco,AC,Acre,Norte,1200401.0,NaN,68.0,139.0
+34,Flávia Costa,flavia.costa@email.com,1995-10-05,F,Rua Almirante Jaceguai,,,Fortaleza,CE,Ceará,Nordeste,2304400.0,NaN,85.0,1389.0
+35,Sergio Almeida,sergio.almeida@email.com,1988-07-18,M,Rua Conselheiro Mafra,até 249/250,,Florianópolis,SC,Santa Catarina,Sul,4205407.0,NaN,48.0,8105.0
+36,Nathalia Rocha,nathalia.rocha@email.com,1992-04-26,F,Rua Barreto Leme,até 960/961,,Campinas,SP,São Paulo,Sudeste,3509502.0,2446.0,19.0,6291.0
+37,Felipe Silva,felipe.silva@email.com,1986-08-13,M,Avenida Paulista,de 2134 ao fim - lado par,,São Paulo,SP,São Paulo,Sudeste,3550308.0,1004.0,11.0,7107.0
+38,Larissa Santos,larissa.santos@email.com,1994-02-09,F,Praça Pio X,lado ímpar,,Rio de Janeiro,RJ,Rio de Janeiro,Sudeste,3304557.0,NaN,21.0,6001.0
+39,Rodrigo Ferreira,rodrigo.ferreira@email.com,1989-11-21,M,Rua dos Aimorés,de 971/972 a 1399/1400,,Belo Horizonte,MG,Minas Gerais,Sudeste,3106200.0,NaN,31.0,4123.0
+4,Ana Costa,ana.costa@email.com,1992-04-12,F,Rua do Rosário,,,Curitiba,PR,Paraná,Sul,4106902.0,NaN,41.0,7535.0
+40,Juliana Costa,juliana.costa@email.com,1990-05-30,F,Rua Monsenhor Celso,,,Curitiba,PR,Paraná,Sul,4106902.0,NaN,41.0,7535.0
+41,Matheus Oliveira,matheus.oliveira@email.com,1991-03-14,M,Avenida Paulista,de 612 a 1510 - lado par,,São Paulo,SP,São Paulo,Sudeste,3550308.0,1004.0,11.0,7107.0
+42,Priscila Martins,priscila.martins@email.com,1993-07-28,F,Praça Pio X,lado ímpar,,Rio de Janeiro,RJ,Rio de Janeiro,Sudeste,3304557.0,NaN,21.0,6001.0
+43,Wagner Costa,wagner.costa@email.com,1985-11-02,M,Rua dos Aimorés,de 971/972 a 1399/1400,,Belo Horizonte,MG,Minas Gerais,Sudeste,3106200.0,NaN,31.0,4123.0
+44,Simone Rocha,simone.rocha@email.com,1994-05-19,F,Rua Monsenhor Celso,,,Curitiba,PR,Paraná,Sul,4106902.0,NaN,41.0,7535.0
+45,Leandro Silva,leandro.silva@email.com,1988-09-11,M,Rua General Canabarro,,,Porto Alegre,RS,Rio Grande do Sul,Sul,4314902.0,NaN,51.0,8801.0
+46,Vanessa Santos,vanessa.santos@email.com,1992-01-25,F,SAUN Quadra 3 Bloco A,,DNER - Núcleo dos Transportes,Brasília,DF,Distrito Federal,Centro-Oeste,5300108.0,NaN,61.0,9701.0
+47,Marcio Oliveira,marcio.oliveira@email.com,1986-12-08,M,Rua João das Botas,,,Salvador,BA,Bahia,Nordeste,2927408.0,NaN,71.0,3849.0
+48,Bianca Costa,bianca.costa@email.com,1995-08-30,F,Avenida Guararapes,,,Recife,PE,Pernambuco,Nordeste,2611606.0,NaN,81.0,2531.0
+49,Fabio Almeida,fabio.almeida@email.com,1989-04-17,M,Vila Ernestina,,,Fortaleza,CE,Ceará,Nordeste,2304400.0,NaN,85.0,1389.0
+5,Carlos Ferreira,carlos.ferreira@email.com,1987-09-30,M,Avenida Borges de Medeiros,de 0681 a 1261 - lado ímpar,,Porto Alegre,RS,Rio Grande do Sul,Sul,4314902.0,NaN,51.0,8801.0
+50,Amanda Lima,amanda.lima@email.com,1993-10-06,F,Beco Perdiz,,,Manaus,AM,Amazonas,Norte,1302603.0,NaN,92.0,255.0
+51,Kleber Ferreira,kleber.ferreira@email.com,1987-02-22,M,Rua Teófilo Brandão,,,Natal,RN,Rio Grande do Norte,Nordeste,2408102.0,NaN,84.0,1761.0
+52,Raquel Souza,raquel.souza@email.com,1994-06-14,F,Avenida Prefeito Osmar Cunha,,,Florianópolis,SC,Santa Catarina,Sul,4205407.0,NaN,48.0,8105.0
+53,Gerson Silva,gerson.silva@email.com,1986-11-27,M,Travessa Vinte e Um de Abril,,,Cuiabá,MT,Mato Grosso,Centro-Oeste,5103403.0,NaN,65.0,9067.0
+56,Fernanda Costa,fernanda.costa@email.com,1995-01-11,F,Avenida Professor Alfredo Balena,lado par,,Belo Horizonte,MG,Minas Gerais,Sudeste,3106200.0,NaN,31.0,4123.0
+57,Renato Oliveira,renato.oliveira@email.com,1990-07-23,M,Travessa Padre Júlio de Campos,,,Curitiba,PR,Paraná,Sul,4106902.0,NaN,41.0,7535.0
+58,Gabriele Lima,gabriele.lima@email.com,1993-05-30,F,Rua dos Andradas,até 419/420,,Porto Alegre,RS,Rio Grande do Sul,Sul,4314902.0,NaN,51.0,8801.0
+59,Patrick Almeida,patrick.almeida@email.com,1987-12-14,M,Quadra SBN Quadra 1,,,Brasília,DF,Distrito Federal,Centro-Oeste,5300108.0,NaN,61.0,9701.0
+6,Juliana Lima,juliana.lima@email.com,1995-01-18,F,Praça do Buriti,,,Brasília,DF,Distrito Federal,Centro-Oeste,5300108.0,NaN,61.0,9701.0
+60,Livia Rocha,livia.rocha@email.com,1996-02-08,F,Rua Desembargador Gonçalves,,,Salvador,BA,Bahia,Nordeste,2927408.0,NaN,71.0,3849.0
+61,Mauricio Silva,mauricio.silva@email.com,1989-08-16,M,Rua Ulhoa Cintra,,,Recife,PE,Pernambuco,Nordeste,2611606.0,NaN,81.0,2531.0
+62,Natalia Santos,natalia.santos@email.com,1994-04-29,F,Rua Vinte e Cinco de Março,,,Fortaleza,CE,Ceará,Nordeste,2304400.0,NaN,85.0,1389.0
+63,Edson Costa,edson.costa@email.com,1986-10-12,M,Beco da Legião,,,Manaus,AM,Amazonas,Norte,1302603.0,NaN,92.0,255.0
+64,Marisa Oliveira,marisa.oliveira@email.com,1991-06-25,F,Rua Alan Kardec,,,Natal,RN,Rio Grande do Norte,Nordeste,2408102.0,NaN,84.0,1761.0
+65,Claudio Ferreira,claudio.ferreira@email.com,1987-09-03,M,Rua Antônio Dib Mussi,,,Florianópolis,SC,Santa Catarina,Sul,4205407.0,NaN,48.0,8105.0
+66,Rosana Souza,rosana.souza@email.com,1992-11-21,F,Avenida Marechal Deodoro,de 949/950 a 1898/1899,,Cuiabá,MT,Mato Grosso,Centro-Oeste,5103403.0,NaN,65.0,9067.0
+69,Tiago Costa,tiago.costa@email.com,1990-02-14,M,Alameda Ezequiel Dias,,,Belo Horizonte,MG,Minas Gerais,Sudeste,3106200.0,NaN,31.0,4123.0
+70,Yasmin Oliveira,yasmin.oliveira@email.com,1993-08-26,F,Rua Doutor Claudino dos Santos,,,Curitiba,PR,Paraná,Sul,4106902.0,NaN,41.0,7535.0
+71,Rafael Lima,rafael.lima@email.com,1987-04-11,M,Rua dos Andradas,de 1402 a 1580 - lado par,,Porto Alegre,RS,Rio Grande do Sul,Sul,4314902.0,NaN,51.0,8801.0
+72,Juliana Almeida,juliana.almeida@email.com,1994-12-03,F,Quadra SBN Quadra 2,,,Brasília,DF,Distrito Federal,Centro-Oeste,5300108.0,NaN,61.0,9701.0
+73,Douglas Silva,douglas.silva@email.com,1988-10-18,M,Vila Ferraro,,,Salvador,BA,Bahia,Nordeste,2927408.0,NaN,71.0,3849.0
+74,Veronica Rocha,veronica.rocha@email.com,1992-05-22,F,Rua Frei Vicente do Salvador,,,Recife,PE,Pernambuco,Nordeste,2611606.0,NaN,81.0,2531.0
+75,Sergio Santos,sergio.santos@email.com,1985-09-09,M,Rua Deputado João Lopes,,,Fortaleza,CE,Ceará,Nordeste,2304400.0,NaN,85.0,1389.0
+76,Marina Costa,marina.costa@email.com,1996-03-15,F,Travessa Nhamundá,,,Manaus,AM,Amazonas,Norte,1302603.0,NaN,92.0,255.0
+77,Antonio Oliveira,antonio.oliveira@email.com,1989-11-28,M,Rua Trairi,de 761/762 a 805/806,,Natal,RN,Rio Grande do Norte,Nordeste,2408102.0,NaN,84.0,1761.0
+78,Silvia Ferreira,silvia.ferreira@email.com,1993-06-12,F,Rua Dom Jaime Câmara,,,Florianópolis,SC,Santa Catarina,Sul,4205407.0,NaN,48.0,8105.0
+79,Fabiano Souza,fabiano.souza@email.com,1987-01-04,M,Praça Visconde de Taunay,,,Cuiabá,MT,Mato Grosso,Centro-Oeste,5103403.0,NaN,65.0,9067.0
+8,Fernanda Rocha,fernanda.rocha@email.com,1991-06-25,F,Avenida Calógeras,,,Rio de Janeiro,RJ,Rio de Janeiro,Sudeste,3304557.0,NaN,21.0,6001.0
+9,Lucas Martins,lucas.martins@email.com,1989-08-14,M,Avenida Rômulo Maiorana,até 638/639,,Belém,PA,Pará,Norte,1501402.0,NaN,91.0,427.0
