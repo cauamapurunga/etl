@@ -55,8 +55,8 @@ Para executar o projeto localmente, siga os passos abaixo.
 
 1. **Clone o repositório:**
    ```bash
-   git clone https://github.com/cauamapurunga/etl
-   cd etl
+   git clone https://github.com/cauamapurunga/medallion-etl
+   cd medallion-etl
    ```
 
 2. **Configure o ambiente Python:**
